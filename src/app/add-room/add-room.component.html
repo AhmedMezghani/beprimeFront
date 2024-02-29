@@ -1,0 +1,75 @@
+<!-- add-room.component.html -->
+
+<div class="modal-header">
+  <h4 class="modal-title">Add Room</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="roomForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name"  name="name" formControlName="name">
+      <div *ngIf="roomForm.get('name')!.hasError('required') && roomForm.get('name')!.touched" class="text-danger">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="input-group">
+      <span class="input-group-text">Description</span>
+      <textarea class="form-control" name="description" formControlName="description"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="view" class="form-label">View</label>
+      <input type="text" class="form-control" id="view"  name="view" formControlName="view">
+    </div>
+    <div class="mb-3">
+      <label for="type" class="form-label">Type</label>
+      <input type="text" class="form-control" id="type"  name="type" formControlName="type">
+    </div>
+    <div class="row">
+
+      <div class="col-md-6 mb-3">
+        <label for="min" class="form-label">min</label>
+        <input type="number" class="form-control" id="min"  name="min" formControlName="min">
+        <div *ngIf="roomForm.get('min')!.hasError('positive') && roomForm.get('min')!.touched" class="text-danger">
+          Min must be a positive value.
+        </div>
+        <div *ngIf="roomForm.hasError('minMaxInvalid') && (roomForm.get('min')!.dirty || roomForm.get('min')!.dirty)" class="text-danger">
+          Max must be greater than Min.
+        </div>
+        <div *ngIf="roomForm.get('min')!.hasError('required') && roomForm.get('min')!.touched" class="text-danger">
+          Min is required.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="max" class="form-label">max</label>
+        <input type="number" class="form-control" id="max"  name="max" formControlName="max">
+        <div *ngIf="roomForm.get('max')!.hasError('required') && roomForm.get('max')!.touched" class="text-danger">
+          Max is required.
+        </div>
+        <div *ngIf="roomForm.get('max')!.hasError('positive') && roomForm.get('max')!.touched" class="text-danger">
+          Max must be a positive value.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="combinaisons" class="form-label">Combinaisons</label>
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let comb of combinaisons">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{ comb }}" id="flexCheck{{ comb }}">
+            <label class="form-check-label" for="flexCheck{{ comb }}">
+              {{ comb }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+  <button type="submit" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
+</div>

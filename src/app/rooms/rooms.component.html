@@ -1,0 +1,45 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4 fs-1">Rooms</h2>
+  <div class="row">
+    <div class="col-md-4 align-self-center">
+      <!-- Input on the left -->
+      <input type="text" class="form-control" placeholder="Enter something" [(ngModel)]="searchValue" (ngModelChange)="onSearchChange()">
+    </div>
+    <div class="col-md-8">
+      <!-- Button on the right -->
+      <div class="d-flex justify-content-end my-4">
+        <button type="button" class="btn btn-primary btn-lg" (click)="openAddRoomModal()">Add Rooms</button>
+      </div>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <div class="col" *ngFor="let room of filteredRooms">
+      <div class="card h-100">
+        <img src="../../assets/image.png" class="card-img-top" alt="Room Image">
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ room.name }}</h5>
+          <p class="card-text">{{ room.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between"><strong>View:</strong> {{ room.view }}</li>
+          <li class="list-group-item d-flex justify-content-between"><strong>Type:</strong> {{ room.type }}</li>
+          <li class="list-group-item d-flex justify-content-between"><strong>Capacity:</strong> {{ room.min }} -- {{ room.max }} persons</li>
+          <li class="list-group-item d-flex justify-content-between overflow-auto text-end" style="height: 6rem;"  >
+            <strong>Combinaisons:</strong>
+            <span *ngIf="room.combinaisons">
+            <span  *ngFor="let combinaison of room.combinaisons.split(';'); let last = last">
+              {{ combinaison }}{{ !last ? ', ' : '' }}
+            </span>
+          </span>
+          </li>
+        </ul>
+        <div class="card-footer">
+          <small class="text-muted">Last updated:</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
